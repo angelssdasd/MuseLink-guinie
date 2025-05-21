@@ -19,7 +19,7 @@ set DIFF_BACKUP_SUBDIR=!DIFF_BACKUP_ROOT!\!DATE!
 set DIFF_BACKUP_FILE=!DIFF_BACKUP_SUBDIR!\!DB_NAME!-diff-!DATE!.sql
 
 REM sql语句代码
-set path=C:\\diff_backu\\!DATE!\\!DB_NAME!-diff-!DATE!.sql
+set path=C:\\diff_backup\\!DATE!\\!DB_NAME!-diff-!DATE!.sql
 
 REM ---------- 目录创建 ----------
 if not exist "!DIFF_BACKUP_ROOT!" mkdir "!DIFF_BACKUP_ROOT!"

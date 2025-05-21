@@ -32,4 +32,22 @@
         DELETE FROM backup WHERE backup_id = #{id}
     </delete>
 
+    <!-- 根据主键返回文件地址 -->
+    <select id="getFilePath" resultType="string">
+            SELECT file_path FROM backup WHERE backup_id = #{backupId}
+    </select>
+
+    <!--根据时间返回相应的地址列表-->
+    <select id="getExpiredFiles" resultType="string">
+        SELECT file_path FROM backup WHERE backup_time &lt; #{expirationTime}
+    </select>
+    <!--根据备份地址返回相应的时间-->
+    <select id="getBackupTime" resultType="java.time.LocalDateTime">
+        SELECT backup_time FROM backup WHERE file_path = #{FilePath}
+    </select>
+    <!--根据文件路径删除记录-->
+    <delete id="deleteByFilePath">
+        DELETE FROM backup WHERE file_path = #{filePath}
+    </delete>
+
 </mapper>

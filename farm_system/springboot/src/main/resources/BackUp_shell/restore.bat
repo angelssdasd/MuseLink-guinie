@@ -3,14 +3,16 @@
 setlocal enabledelayedexpansion
 chcp 65001 > nul
 
+REM 输入参数 ------------------------------------------------
+set FULL_BACKUP_PATH=%1
+set DIFF_BACKUP_PATH=%2
+
 REM 恢复配置 ------------------------------------------------
 set DB_NAME=manage
 set MY_INI=D:\IDEA_project\zuoye\farm_system\springboot\src\main\resources\BackUp_shell\my.ini
 set MYSQL_HOME=D:\MYSQL\MySQL Server 8.0
 
-REM 输入参数 ------------------------------------------------
-set FULL_BACKUP_PATH=C:\backup\20250505\manage-full-20250505.sql
-set DIFF_BACKUP_PATH=C:\diff_backup\20250505\manage-diff-20250505.sql
+
 
 REM 检查必要参数 --------------------------------------------
 if "%FULL_BACKUP_PATH%"=="" (

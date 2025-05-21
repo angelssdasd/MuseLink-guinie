@@ -7,16 +7,12 @@
     </div>
 
     <div class="card">
-      <el-table :data="data.tableData" stripe>
+      <el-table ref="tableRef" :data="data.tableData" stripe @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="backupId" label="ID" />
         <el-table-column prop="backupTime" label="时间" />
         <el-table-column prop="filePath" label="路径" />
         <el-table-column prop="operatorId" label="操作员ID" />
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button type="danger" @click="handleDelete(scope.row.backupId)">还原到此状态</el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </div>
 
@@ -30,13 +26,23 @@
         :total="data.total"
       />
     </div>
+
+    <div class="card" v-if="selectedFiles.length">
+      <h3>
+        已选择的文件
+        <el-button type="danger" @click="clearSelectedFiles">清空</el-button>
+        <el-button type="primary" @click="restore">恢复</el-button>
+      </h3>
+      <ul>
+        <li v-for="file in selectedFiles" :key="file.backupId">{{ file.filePath }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import request from '@/utils/request'
-import { ElMessageBox, ElMessage } from 'element-plus'
 
 const data = reactive({
   tableData: [],
@@ -45,6 +51,9 @@ const data = reactive({
   pageSize: 10,
   operatorId: null,
 })
+const tableRef = ref(null)
+
+const selectedFiles = ref([])
 
 const load = () => {
   request.get('/backup/selectPage', {
@@ -59,22 +68,33 @@ const load = () => {
   })
 }
 
-const handleDelete = (id) => {
-  ElMessageBox.confirm('确认恢复到此状态？', '警告', { type: 'warning' }).then(() => {
-    request.delete(`/backup/delete/${id}`).then(res => {
-      if (res.code === '200') {
-        ElMessage.success('执行成功')
-        load()
-      } else {
-        ElMessage.error(res.msg)
-      }
-    })
-  })
+const handleSelectionChange = (selection) => {
+  selectedFiles.value = selection.slice(0,2)// 只选择前两个文件
 }
 
 const reset = () => {
   data.operatorId = null
   load()
+}
+
+const clearSelectedFiles = () => {
+  selectedFiles.value = []
+  tableRef.value.clearSelection()
+}
+const restore = () => {
+  if (selectedFiles.value.length) {
+    const backupIds = selectedFiles.value.map(file => file.backupId).join(',')
+    request.post('/backup/restore', backupIds).then(res => {
+      if (res.code === '200') {
+        ElMessage.success('恢复成功')
+        load()
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  } else {
+    ElMessage.warning('请选择要恢复的文件')
+  }
 }
 
 load()

@@ -14,7 +14,6 @@ public class RunBatScript {
         // 使用 ProcessBuilder 运行 bat 脚本
         int operatorId = -1;
         ProcessBuilder processBuilder = new ProcessBuilder(batScriptPath1, String.valueOf(operatorId));
-        System.out.println(operatorId);
         processBuilder.redirectErrorStream(true); // 将错误流合并到输出流
 
         try {
