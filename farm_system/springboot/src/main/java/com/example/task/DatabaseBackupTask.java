@@ -1,5 +1,6 @@
 package com.example.task;
 
+import com.example.common.LogAOP;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +19,7 @@ public class DatabaseBackupTask {
             this.resourceLoader = resourceLoader;
     }
     // 使用@Scheduled注解定义一个定时任务，每周六2点备份
+    @LogAOP(title = "备份", content = "定时全量备份数据库")
     @Scheduled(cron = "0 0 2 ? * 6")
     public void FullBackupDatabase() {
 
@@ -78,6 +80,7 @@ public class DatabaseBackupTask {
         }
     }
     // 使用@Scheduled注解定义一个定时任务，每天3点备份
+    @LogAOP(title = "备份", content = "定时差异备份数据库")
     @Scheduled(cron = "0 0 3 * * ?")
     public void IncrementalBackupDatabase() {
 

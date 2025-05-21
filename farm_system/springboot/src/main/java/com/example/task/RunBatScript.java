@@ -13,7 +13,7 @@ public class RunBatScript {
         String batScriptPath2 = "D:/IDEA_project/zuoye/farm_system/springboot/src/main/resources/BackUp_shell/restore.bat";
         // 使用 ProcessBuilder 运行 bat 脚本
         int operatorId = -1;
-        ProcessBuilder processBuilder = new ProcessBuilder(batScriptPath1, String.valueOf(operatorId));
+        ProcessBuilder processBuilder = new ProcessBuilder(batScriptPath2, String.valueOf(operatorId));
         processBuilder.redirectErrorStream(true); // 将错误流合并到输出流
 
         try {

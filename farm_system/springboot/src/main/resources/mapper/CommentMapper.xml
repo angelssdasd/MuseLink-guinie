@@ -30,4 +30,9 @@
     <delete id="deleteById">
         DELETE FROM comment WHERE comment_id = #{id}
     </delete>
+    <!-- 获取指定时间之后的所有评论 -->
+    <select id="selectByPublishTime" resultType="com.example.entity.Comment">
+        SELECT * FROM comment
+        WHERE publish_time &gt;= #{expirationTime} AND review_status = '未通过'
+    </select>
 </mapper>

@@ -49,5 +49,13 @@
     <delete id="deleteByFilePath">
         DELETE FROM backup WHERE file_path = #{filePath}
     </delete>
+    <!--根据时间返回相应的文件列表-->
+    <select id="selectByTime" resultType="com.example.entity.Backup">
+        SELECT * FROM backup WHERE backup_time &gt; #{firstTime}
+    </select>
+
+    <select id="selectByInterval" resultType="com.example.entity.Backup">
+        SELECT * FROM backup WHERE backup_time &gt; #{firstTime} AND backup_time &lt; #{secondBackupTime}
+    </select>
 
 </mapper>

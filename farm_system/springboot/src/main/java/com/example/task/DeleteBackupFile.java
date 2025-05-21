@@ -1,6 +1,7 @@
 package com.example.task;
 
 import cn.hutool.core.date.DateTime;
+import com.example.common.LogAOP;
 import com.example.service.BackupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +18,7 @@ public class DeleteBackupFile {
     @Autowired
     private BackupService backupService;
 
+    @LogAOP(title = "删除", content = "删除过期备份文件")
      @Scheduled(cron = "0 0 0 ? * 1")// 每周一凌晨 0 点执行
     public void deleteBackupFile() {
         DateTime now = DateTime.now();

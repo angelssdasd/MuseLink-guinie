@@ -1,12 +1,10 @@
 package com.example.controller;
 
 import com.example.common.Result;
-import com.example.entity.Returns;
 import com.example.entity.review;
 import com.example.service.ReviewService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController // 注意这里首字母大写

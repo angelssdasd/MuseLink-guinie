@@ -17,7 +17,8 @@ set FULL_BACKUP_FILE=!BACKUP_SUBDIR!\!DB_NAME!-full-!DATE!.sql
 set MASTER_STATUS_FILE=!BACKUP_SUBDIR!\!DB_NAME!-master-status-!DATE!.txt
 
 REM sql语句代码
-set path=C:\\backup\\!DATE!\\!DB_NAME!-full-!DATE!.sql
+set BACKUP_PATH=C:\\backup\\!DATE!\\!DB_NAME!-full-!DATE!.sql
+
 
 REM MySQL配置
 set MY_INI=D:\IDEA_project\zuoye\farm_system\springboot\src\main\resources\BackUp_shell\my.ini
@@ -40,6 +41,7 @@ echo [%TIME%] Starting full backup...
     --single-transaction ^
     --source-data=2 ^
     --flush-logs ^
+    --ignore-table=manage.backup ^
     !DB_NAME! > "!FULL_BACKUP_FILE!"
 
 REM 检查备份结果
@@ -48,6 +50,7 @@ if !errorlevel! neq 0 (
     exit /b 2
 )
 echo [%TIME%] Full backup completed: !FULL_BACKUP_FILE!
+
 
 REM 记录binlog位置
 echo [%TIME%] Recording master status...
@@ -75,11 +78,10 @@ if %FILE_CHECK_FAILED% equ 1 (
 
 echo [%TIME%] All backup files generated in: !BACKUP_SUBDIR!
 
-if !errorlevel! equ 0 (
-    "%MYSQL_HOME%\bin\mysql.exe" ^
-        --defaults-extra-file="%MY_INI%" ^
-        --database=manage ^
-        --execute="use manage; INSERT INTO backup (backup_time, file_path, operator_id) VALUES ('%DATE%', '%path%',%operatorId%);"
-)
+
+"%MYSQL_HOME%\bin\mysql.exe" ^
+    --defaults-extra-file="%MY_INI%" ^
+    --database=manage ^
+    --execute="use manage; INSERT INTO backup (backup_time, file_path, operator_id) VALUES ('%DATE%', '%BACKUP_PATH%',%operatorId%);"
 
 endlocal

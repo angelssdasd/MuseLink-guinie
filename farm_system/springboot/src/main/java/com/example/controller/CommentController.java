@@ -1,17 +1,10 @@
 package com.example.controller;
 
-import com.example.common.LogAOP;
 import com.example.common.Result;
-import com.example.entity.Admin;
 import com.example.entity.Comment;
 import com.example.mapper.CommentMapper;
-import com.example.service.AdminService;
-import com.github.pagehelper.PageInfo;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 管理员前端操作接口

@@ -32,6 +32,7 @@ public class LogAspect {
             operator = user.getUserId();
         }
         System.out.println("userId: " + operator);
+
         Result result = (Result)joinPoint.proceed();
 
         Object data = result.getData();

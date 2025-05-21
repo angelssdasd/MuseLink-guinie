@@ -4,8 +4,8 @@ setlocal enabledelayedexpansion
 chcp 65001 > nul
 
 REM 输入参数 ------------------------------------------------
-set FULL_BACKUP_PATH=%1
-set DIFF_BACKUP_PATH=%2
+set FULL_BACKUP_PATH=%~1
+set DIFF_BACKUP_PATH=%~2
 
 REM 恢复配置 ------------------------------------------------
 set DB_NAME=manage
@@ -15,7 +15,7 @@ set MYSQL_HOME=D:\MYSQL\MySQL Server 8.0
 
 
 REM 检查必要参数 --------------------------------------------
-if "%FULL_BACKUP_PATH%"=="" (
+if "%FULL_BACKUP_PATH%" == "" (
     echo Error: 必须指定全量备份文件路径
     echo “用法: restore.bat [全量备份文件] [差异备份文件]”
     / exitb 1
@@ -53,9 +53,17 @@ if !errorlevel! neq 0 (
 echo [%TIME%] 全量恢复完成 >> "%LOG_FILE%"
 
 REM 步骤3：执行差异恢复（如果提供）---------------------------
-if "%DIFF_BACKUP_PATH%" neq "" (
+echo [%TIME%] DIFF_BACKUP_PATH = "%DIFF_BACKUP_PATH%" >> "%LOG_FILE%"
+
+if defined DIFF_BACKUP_PATH if not "%DIFF_BACKUP_PATH%" == "" (
+    REM 验证文件是否存在
+    if not exist "%DIFF_BACKUP_PATH%" (
+        echo [%TIME%] "错误：差异备份文件不存在" >> "%LOG_FILE%"
+        exit /b 2
+    )
+
     echo [%TIME%] 开始差异恢复... >> "%LOG_FILE%"
-    "%MYSQL_HOME%\bin\mysql.exe" --defaults-extra-file="!MY_INI!" --force %DB_NAME% <%DIFF_BACKUP_PATH%
+    "%MYSQL_HOME%\bin\mysql.exe" --defaults-extra-file="!MY_INI!" --force %DB_NAME% < "%DIFF_BACKUP_PATH%"
 
     if !errorlevel! neq 0 (
         echo [%TIME%] "错误：差异恢复失败 (错误码: !errorlevel!)" >> "%LOG_FILE%"
@@ -63,6 +71,7 @@ if "%DIFF_BACKUP_PATH%" neq "" (
     )
     echo [%TIME%] 差异恢复完成 >> "%LOG_FILE%"
 )
+
 
 REM 最终检查 ------------------------------------------------
 echo [%TIME%] 恢复操作成功完成 >> "%LOG_FILE%"

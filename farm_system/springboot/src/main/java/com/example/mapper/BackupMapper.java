@@ -29,4 +29,8 @@ public interface BackupMapper {
     LocalDateTime getBackupTime(String FilePath);
     //根据文件路径删除记录
     void deleteByFilePath(String filePath);
+    // 根据备份时间获取文件
+    List<Backup> selectByTime(LocalDateTime firstTime);
+    //  根据时间间隔获取文件
+    List<Backup> selectByInterval(LocalDateTime firstTime, LocalDateTime secondBackupTime);
 }
