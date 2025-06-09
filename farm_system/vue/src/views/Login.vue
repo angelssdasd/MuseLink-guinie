@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="color: #39bf23; font-size: 50px; font-weight: bold; position: absolute; text-align: center; top: 50px">后台管理系统</div>
+    <div style="color: #39bf23; font-size: 50px; font-weight: bold; position: absolute; text-align: center; top: 50px">MuseLink-圭臬</div>
     <div class="login-box">
       <div style="font-weight: bold; font-size: 24px; text-align: center; margin-bottom: 30px; color: #1450aa">欢 迎 登 录</div>
       <el-form :model="data.form"  ref="formRef" :rules="data.rules">

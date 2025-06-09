@@ -149,6 +149,9 @@ VALUES (
            '123',  -- 示例 bcrypt 加密密码
            'test_reviewer@example.com'
        );
+INSERT INTO artifact (name, era, type, museum, description, image_url, likes, feature) VALUES
+    ('青花瓷瓶', '明朝', '瓷器', '故宫博物院', '明代永乐年间的青花瓷器，釉面光润，图案精美。',
+     'https://wangri.oss-cn-beijing.aliyuncs.com/collection/1/30.jpg', '1250', 'blue white porcelain, floral pattern, Ming dynasty');
 INSERT INTO comment (content, publish_time, user_id, artifact_id, review_status) VALUES
                                                                                      ('这件文物的历史真是令人着迷！', '2025-05-10 14:30:00', 1, 101, '通过'),
                                                                                      ('很荣幸能看到如此珍贵的文物。', DEFAULT, 2, 102, '未通过'),
@@ -160,3 +163,12 @@ INSERT INTO comment (content, publish_time, user_id, artifact_id, review_status)
                                                                                      ('感受到了历史的厚重。', DEFAULT, 8, 106, '未通过'),
                                                                                      ('非常值得一看的展览。', '2025-05-06 20:30:00', 9, 107, '通过'),
                                                                                      ('让我们一起珍惜这些文化遗产吧。', DEFAULT, 10, 108, '通过');
+INSERT INTO comment (content, publish_time, user_id, artifact_id, review_status) VALUES
+                                                                                     ('这件文物的历史非常悠久，令人赞叹！', '2025-05-18 10:30:00', 1001, 2001, '通过'),
+                                                                                     ('真希望可以了解更多关于这个展品的信息。', '2025-05-19 14:45:00', 1002, 2002, '通过'),
+                                                                                     ('展示效果非常好，值得一看。', NOW(), 1003, 2003, '未通过'),
+                                                                                     ('这简直是一件艺术品，太美了！', '2025-05-20 09:22:00', 1004, 2004, '通过'),
+                                                                                     ('我对这段历史很感兴趣，希望能有更多类似的展览。', '2025-05-21 16:47:00', 1005, 2005, '未通过'),
+                                                                                     ('每次参观都有不同的收获，真的很棒！', NOW(), 1006, 2006, '通过'),
+                                                                                     ('希望能够了解更多的背景故事。', '2025-05-22 13:15:00', 1007, 2007, '通过'),
+                                                                                     ('展览设计得很独特，让人印象深刻！', NOW(), 1008, 2008, '未通过');

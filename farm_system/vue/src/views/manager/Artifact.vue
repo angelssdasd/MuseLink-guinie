@@ -15,12 +15,16 @@
         <el-table-column label="文物ID" prop="artifactId"></el-table-column>
         <el-table-column label="文物名称" prop="name"></el-table-column>
         <el-table-column label="年代" prop="era"></el-table-column>
-        <el-table-column label="文物类型" prop="type"></el-table-column>
+       
         <el-table-column label="博物馆名称" prop="museum"></el-table-column>
         <el-table-column label="详细介绍" prop="description"></el-table-column>
-        <el-table-column label="图片" prop="imageUrl"></el-table-column>
+      <el-table-column label="图片">
+    <template #default="scope">
+      <img :src="scope.row.imageUrl" alt="文物图片" style="width: 50px; height: 50px;">
+    </template>
+  </el-table-column>
         <el-table-column label="点赞数" prop="likes"></el-table-column>
-        <el-table-column label="特征向量" prop="feature"></el-table-column>
+       
         <el-table-column label="操作" header-align="center" width="160">
           <template #default="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
@@ -50,9 +54,6 @@
         </el-form-item>
         <el-form-item label="详细介绍" prop="description">
           <el-input v-model="data.form.description" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="特征向量" prop="feature">
-          <el-input v-model="data.form.feature" autocomplete="off" />
         </el-form-item>
         <el-form-item label="点赞数" prop="likes">
           <el-input v-model="data.form.likes" autocomplete="off" />
